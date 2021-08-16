@@ -22,15 +22,19 @@ pipeline {
         }
         stage ('Build docker image') {
             steps {
-                dockerImage = docker.build registry + ":${BUILD_NUMBER}"
-                dockerImage = docker.build registry + ":latest"
+                script {
+                    dockerImage = docker.build registry + ":${BUILD_NUMBER}"
+                    dockerImage = docker.build registry + ":latest"
+                }
             }
         }
         stage ('Login to docker and push') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pass', usernameVariable: 'username')]) {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pass', usernameVariable: 'username')]) {
                     dockerImage.push()
                     dockerImageLatest.push()
+                }
                 }
             }
         }
