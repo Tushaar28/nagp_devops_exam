@@ -40,7 +40,7 @@ pipeline {
         }
         stage ('Docker deployment') {
             steps {
-                bat 'docker run --name nagp_devops_exam -d -p 8080:7400 tushaar28/nagp_devops_exam:latest'
+                bat 'docker run --name nagp_devops_exam -d -p 7400:8080 tushaar28/nagp_devops_exam:latest'
             }
         }
     }
